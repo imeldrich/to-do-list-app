@@ -1,11 +1,10 @@
 const add = document.getElementById("add-btn");
 const input = document.getElementById("input-el");
 const ulEl = document.getElementById("ul-el");
-const checkbox = document.querySelectorAll("input[type='checkbox']");
+const checkbox = document.getElementsByClassName("checkbox");
 const taskFromLocalStorage = JSON.parse(localStorage.getItem("task"));
 
 let tasks = [];
-let index = ""
 
 // add task to the list
 add.addEventListener("click", function() {
@@ -21,14 +20,14 @@ add.addEventListener("click", function() {
 function renderTasks() {
     let taskLog = "";
     for (let i = 0; i < tasks.length; i++) {
-    index = tasks[i];
-    taskLog += `
-    <li>
-        <input type="checkbox" id="${tasks[i]}" class="checkbox"/>
-        <label for="${tasks[i]}">${tasks[i]}</label>
-    </li>`;
-}
+        taskLog += `
+        <li>
+            <input type="checkbox" class="checkbox"/>
+            <label>${tasks[i]}</label>
+        </li>`;
+    }
     ulEl.innerHTML = taskLog;
+    removeTask();
 }
 
 // load tasks from local storage on page load
@@ -37,8 +36,15 @@ if (taskFromLocalStorage) {
     renderTasks();
 }
 
-// if (index) {
-//         tasks.splice(index, 1);
-//         localStorage.setItem("task", JSON.stringify(tasks));
-//         renderTasks();
-//     }
+// remove task when checkbox is clicked
+function removeTask() {
+    for (let i = 0; i < tasks.length; i++) {
+        checkbox[i].addEventListener("click", function() {
+            if (checkbox[i].checked) {
+                tasks.splice(i, 1);
+                localStorage.setItem("task", JSON.stringify(tasks));
+                renderTasks();
+            }
+        });
+    }
+}
