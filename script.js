@@ -106,10 +106,10 @@ onValue(markedTasksInDB, function(snapshot) {
 
         clearUlForMarkedTasks()
 
-        for (let i = 0; i < itemsArray.length; i++) {
-            let currentItem = itemsArray[i];
+        for (let i = itemsArray.length - 1; i >= 0; i--) {
+            let reversedItem = itemsArray[i];
 
-            appendItemToMarkedTask(currentItem)
+            appendItemToMarkedTask(reversedItem)
         }
     } else {
         ulForMarkedTasks.innerHTML = "No completed tasks"
